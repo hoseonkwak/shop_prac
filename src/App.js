@@ -1,72 +1,65 @@
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Container, Navbar, Nav, Row, Col } from "react-bootstrap";
+import { Container, Navbar, Nav, Row } from "react-bootstrap";
 import { useState } from "react";
+import data from "./data.js";
+import Card from "./components/Card.js";
+import { Routes, Route, Link, useNavigate, Outlet } from "react-router-dom";
+import Detail from "./components/Detail.js";
+import About from "./components/About.js";
 
 function App() {
-  let [shoes] = useState([
-    {
-      id: 0,
-      title: "White and Black",
-      content: "Born in France",
-      price: 120000,
-    },
-    {
-      id: 1,
-      title: "Red Knit",
-      content: "Born in Seoul",
-      price: 110000,
-    },
-    {
-      id: 2,
-      title: "Grey Yordan",
-      content: "Born in the States",
-      price: 130000,
-    },
-  ]);
+  let [shoes] = useState(data);
+  // console.log(shoes);
+  let navigate = useNavigate();
+
   return (
     <div className="App">
       <Navbar bg="light" variant="light">
         <Container>
           <Navbar.Brand href="#home">Trip</Navbar.Brand>
           <Nav className="me-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#features">관광지</Nav.Link>
+            <Nav.Link
+              onClick={() => {
+                navigate("/");
+              }}
+            >
+              Home
+            </Nav.Link>
+            <Nav.Link
+              onClick={() => {
+                navigate("/detail");
+              }}
+            >
+              Detail
+            </Nav.Link>
           </Nav>
         </Container>
       </Navbar>
-      <div className="main-bg"></div>
-      <Container>
-        <Row>
-          <Col>
-            <img
-              src="https://codingapple1.github.io/shop/shoes1.jpg"
-              alt="신발"
-              width="80%"
-            />
-            <h4>상품명</h4>
-            <p>상품설명</p>
-          </Col>
-          <Col>
-            <img
-              src="https://codingapple1.github.io/shop/shoes2.jpg"
-              alt="신발"
-              width="80%"
-            />
-            <h4>상품명</h4>
-            <p>상품설명</p>
-          </Col>
-          <Col>
-            <img
-              src="https://codingapple1.github.io/shop/shoes3.jpg"
-              alt="신발"
-              width="80%"
-            />
-            <h4>상품명</h4>
-            <p>상품설명</p>
-          </Col>
-        </Row>
-      </Container>
+      {/* <Link to="/">home</Link>&nbsp;
+      <Link to="/detail">detail</Link> */}
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <>
+              <div className="main-bg"></div>
+              <Container>
+                <Row>
+                  {shoes.map((el, i) => {
+                    return <Card key={i} shoes={shoes[i]} i={i} />;
+                  })}
+                </Row>
+              </Container>
+            </>
+          }
+        />
+        <Route path="/detail" element={<Detail />} />
+        <Route path="/about" element={<About />}>
+          <Route path="member" element={<About />} />
+          <Route path="location" element={<About />} />
+        </Route>
+      </Routes>
     </div>
   );
 }
