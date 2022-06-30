@@ -4,7 +4,7 @@ import { Container, Navbar, Nav, Row } from "react-bootstrap";
 import { useState } from "react";
 import data from "./data.js";
 import Card from "./components/Card.js";
-import { Routes, Route, Link, useNavigate, Outlet } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import Detail from "./components/Detail.js";
 import About from "./components/About.js";
 
@@ -28,7 +28,7 @@ function App() {
             </Nav.Link>
             <Nav.Link
               onClick={() => {
-                navigate("/detail");
+                navigate("/detail/0");
               }}
             >
               Detail
@@ -36,8 +36,6 @@ function App() {
           </Nav>
         </Container>
       </Navbar>
-      {/* <Link to="/">home</Link>&nbsp;
-      <Link to="/detail">detail</Link> */}
       <Routes>
         <Route
           path="/"
@@ -54,10 +52,11 @@ function App() {
             </>
           }
         />
-        <Route path="/detail" element={<Detail />} />
+        <Route path="/detail/:id" element={<Detail shoes={shoes} />} />
+
         <Route path="/about" element={<About />}>
-          <Route path="member" element={<About />} />
-          <Route path="location" element={<About />} />
+          <Route path="member" element={<div>멤버임</div>} />
+          <Route path="location" element={<div>위치정보임</div>} />
         </Route>
       </Routes>
     </div>
