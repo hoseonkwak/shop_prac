@@ -12,7 +12,7 @@ let CustomBtn = styled.button`
 function Detail(props) {
   let { id } = useParams();
 
-  console.log(parseInt(id) + 1);
+  // console.log(parseInt(id) + 1);
   return (
     <Container>
       {/* <CustomBtn bg="blue">button</CustomBtn>
